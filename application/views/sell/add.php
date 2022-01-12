@@ -1,0 +1,691 @@
+<?php
+    $this->load->view('header');
+?>
+<style>
+    .table th{
+        padding: 4px !important;
+        font-size: 15px !important;
+    }
+    .table td{
+        padding: 4px !important;
+        font-size: 15px !important;
+    }
+</style>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <h1 class="m-0 text-dark">
+                Sell: Add
+                <?php $isView = $this->app_model->have_access_role(MANUFACTURE_MODULE_ID, "view"); ?>
+                <?php if($isView) { ?>
+                    <a href="<?= base_url('sell/sell_list') ?>" class="btn btn-primary btn-sm float-right" style="margin: 5px;">Sell List</a>
+                <?php } ?>
+            </h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content" id="body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <form id="save_sell" class="form-horizontal" action=""  method="post"  novalidate enctype="multipart/form-data">
+                        <input type="hidden" name="sell_id" id="sell_id" value="<?php echo isset($sell_row->sell_id) ? $sell_row->sell_id : ''; ?>">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2 pr-0">
+                                    <div class="form-group">
+                                        <label for="job_card_id"> Job No<span style="color:red"> *</span></label>
+                                        <select name="job_card_id" id="job_card_id" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 pr-0">
+                                    <div class="form-group">
+                                        <label for="party"> Party<span style="color:red"> *</span></label>
+                                        <input type="text" class="form-control" name="party" id="party" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="melting"> Touch<span style="color:red"> *</span></label>
+                                        <input type="text" class="form-control" name="melting" id="melting" disabled="disabled">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0" style="">
+                                    <div class="form-group">
+                                        <label for="sell_date"> Date<span style="color:red"> *</span></label>
+                                        <input type="text" class="form-control pl-2 pr-2" value="<?php echo isset($sell_row->sell_date) ? date("d-m-Y",strtotime($sell_row->sell_date)) : date('d-m-Y'); ?>" name="sell_date" id="sell_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="remark"> Remark</label>
+                                        <textarea name="remark" id="remark" class="form-control"><?php echo isset($sell_row->remark) ? $sell_row->remark : ''; ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="item_id"> Item<span style="color:red"> *</span></label>
+                                        <?php /*<select class="form-control" name="item_id" id="item_id"></select>*/ ?>
+                                        <br><span id="item_name"></span>
+                                        <input type="hidden" name="tag_id" id="tag_id">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="gross"> Gross<span style="color:red"> *</span></label>
+                                        <input type="text" name="gross" id="gross" class="form-control num_only" value="<?php echo isset($sell_row->gross) ? $sell_row->gross : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="net"> Net<span style="color:red"> *</span></label>
+                                        <input type="text" name="net" id="net" class="form-control num_only" value="<?php echo isset($sell_row->net) ? $sell_row->net : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="touch"> Touch</label>
+                                        <input type="text" name="touch" id="touch" class="form-control num_only" value="<?php echo isset($sell_row->touch) ? $sell_row->touch : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="wastage"> Wastage</label>
+                                        <input type="text" name="wastage" id="wastage" class="form-control num_only" value="<?php echo isset($sell_row->wastage) ? $sell_row->wastage : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <label for="fine"> Fine</label>
+                                        <input type="text" name="fine" id="fine" class="form-control num_only" value="<?php echo isset($sell_row->fine) ? $sell_row->fine : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pr-0">
+                                    <div class="form-group">
+                                        <?php /*<label for="other_charges"><a href="javascript:void(0)" id="other_charges_details" class="" style="margin: 0; font-size: 14px;">Other Charges</a></label>*/ ?>
+                                        <label for="other_charges" style="font-size: 14px;">Other Charges</label>
+                                        <input type="text" name="other_charges" class="form-control" id="other_charges" placeholder="" value="<?php echo isset($sell_row->other_charges) ? $sell_row->other_charges : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 pr-0">
+                                    <div class="form-group">
+                                        <label for="sell_party_id">Sell Party</label>
+                                        <select name="sell_party_id" id="sell_party_id" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1 pr-0">
+                                    <label for="image">Image</label>
+                                    <span id="image"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" id="module_submit_btn" class="btn btn-info float-right">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="other_charges_details_model" class="modal fade myModelClose" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="background-color:#f1e8e1;">
+                    <div class="modal-header">
+                        <div class="col-md-6">
+                            <h4 class="modal-title" id="myModalLabel">Other Charges Details</h4>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                    </div>
+                    <div class="modal-body edit-content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="other_charges_details_form">
+                                    <input type="hidden" name="other_charges_details_index" id="other_charges_details_index" />
+                                    <?php if(isset($other_charges_details_data) && !empty($other_charges_details_data)){ ?>
+                                        <input type="hidden" name="other_charges_details_data[other_charges_details_id]" id="other_charges_details_id" />
+                                    <?php } ?>
+                                    <div class="col-md-4 pr-0">
+                                        <label for="charges_id">Charges For<span class="required-sign">&nbsp;*</span></label>
+                                        <select name="other_charges_details_data[charges_id]" class="form-control charges_id" id="charges_id"></select>
+                                    </div>
+                                    <div class="col-md-2 pr-0">
+                                        <label for="charges_weight">Weight<span class="required-sign">&nbsp;*</span></label>
+                                        <input type="text" name="other_charges_details_data[charges_weight]" class="form-control num_only" id="charges_weight" >
+                                    </div>
+                                    <div class="col-md-2 pr-0">
+                                        <label for="charges_rate">Rate<span class="required-sign">&nbsp;*</span></label>
+                                        <input type="text" name="other_charges_details_data[charges_rate]" class="form-control num_only" id="charges_rate" >
+                                    </div>
+                                    <div class="col-md-2 pr-0">
+                                        <label for="charges_amount">Amount<span class="required-sign">&nbsp;*</span></label>
+                                        <input type="text" name="other_charges_details_data[charges_amount]" class="form-control num_only" id="charges_amount" >
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label></label>
+                                        <input type="button" id="add_other_charges_details" class="btn btn-info btn-sm" value="Add Line" style="margin-top: 21px;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 table-responsive"><br>
+                                <table style="" class="table custom-table item-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="80px">Action</th>
+                                            <th>Charges For</th>
+                                            <th class="text-right">Weight</th>
+                                            <th class="text-right">Rate</th>
+                                            <th class="text-right">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="other_charges_details_list"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total:</th>
+                                            <th></th>
+                                            <th class="text-right" id="total_other_charges_details_weight"></th>
+                                            <th></th>
+                                            <th class="text-right" id="total_other_charges_details_amount"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+<script type="text/javascript">
+    $('#body-content').on('change keyup keydown click', 'input, textarea, select', function (e) {
+        $(this).addClass('changed-input');
+    });
+    $(window).on('beforeunload', function () {
+        if ($('.changed-input').length) {
+            return 'Are you sure you want to leave?';
+        }
+    });
+
+    var edit_other_charges_details_inc = 0;
+    var other_charges_details_objectdata = [];
+    
+    $(document).ready(function(){
+        <?php if (isset($sell_row->other_charges_details)) { ?>
+        var li_other_charges_details_objectdata = <?php echo $sell_row->other_charges_details; ?>;
+        if (li_other_charges_details_objectdata != '') {
+            $.each(li_other_charges_details_objectdata, function (index, value) {
+                other_charges_details_objectdata.push(value);
+            });
+        }
+        <?php } ?>
+
+        $('#sell_date').datepicker({
+            format: 'dd-mm-yyyy',
+            todayBtn: "linked",
+            todayHighlight: true,
+            autoclose: true
+        });
+
+        initAjaxSelect2($("#job_card_id"), "<?= base_url('app/job_card_select2_source') ?>");
+        <?php if(isset($sell_row->job_card_id)){ ?>
+            setSelect2Value($("#job_card_id"),"<?=base_url('app/set_job_card_select2_val_by_id/'.$sell_row->job_card_id)?>");
+            set_jon_card_detail();
+        <?php } else { ?>
+            $('#job_card_id').select2('open');
+        <?php }  ?>
+        $(document).on('change','#job_card_id',function(){
+            set_jon_card_detail();
+        });
+
+        initAjaxSelect2($("#item_id"), "<?= base_url('app/item_select2_source') ?>");
+        <?php if(isset($sell_row->item_id)){ ?>
+            setSelect2Value($("#item_id"),"<?=base_url('app/set_item_select2_val_by_id/'.$sell_row->item_id)?>");
+        <?php } ?>
+
+        initAjaxSelect2($("#sell_party_id"), "<?= base_url('app/party_select2_source') ?>");
+        <?php if(isset($sell_row->sell_party_id)){ ?>
+            setSelect2Value($("#sell_party_id"),"<?=base_url('app/set_party_select2_val_by_id/'.$sell_row->sell_party_id)?>");
+        <?php } ?>
+
+        $(document).on('input change','#net, #touch, #wastage',function () {
+            var net = parseFloat($("#net").val()) || 0;
+            var touch = parseFloat($("#touch").val()) || 0;
+            var wastage = parseFloat($("#wastage").val()) || 0;
+            var fine = parseFloat(net) * (parseFloat(touch) + parseFloat(wastage)) / 100;
+            $("#fine").val(fine.toFixed(3));
+        });
+
+        $(document).on('click', '#other_charges_details', function () {
+            initAjaxSelect2($("#charges_id"), "<?= base_url('app/charges_select2_source/') ?>");
+            $('#other_charges_details_model').modal('show');
+            setTimeout(function(){ $('#charges_id').select2('open'); }, 200);
+            display_other_charges_details_html(other_charges_details_objectdata);
+        });
+        $('#other_charges_details_model').on('hidden.bs.modal', function () {
+            var total_other_charges_details_amount = $('#total_other_charges_details_amount').html() || 0;
+            $('#other_charges').val(total_other_charges_details_amount).trigger("change");
+            $('#charges_amount').val('');
+        });
+        $(document).on('keyup change', '#charges_weight, #charges_rate', function () {
+            var charges_weight = $('#charges_weight').val() || 0;
+            var charges_rate = $('#charges_rate').val() || 0;
+            var charges_amount = parseFloat(charges_weight) * parseFloat(charges_rate);
+            $('#charges_amount').val(charges_amount);
+        });
+        $(document).on('click', '#add_other_charges_details', function () {
+            var charges_id = $("#charges_id").val();
+            if (charges_id == '' || charges_id == null) {
+                $("#charges_id").select2('open');
+                show_notify("Please select Charges For!", false);
+                return false;
+            }
+            var charges_amount = $("#charges_amount").val();
+            if (charges_amount == '' || charges_amount == null) {
+                show_notify("Amount is required!", false);
+                $("#charges_amount").focus();
+                return false;
+            }
+
+            $("#add_other_charges_details").attr('disabled', 'disabled');
+            var key = '';
+            var value = '';
+            var other_charges_details = {};
+            $('input[name^="other_charges_details_data"]').each(function () {
+                key = $(this).attr('name');
+                key = key.replace("other_charges_details_data[", "");
+                key = key.replace("]", "");
+                value = $(this).val();
+                other_charges_details[key] = value;
+            });
+            other_charges_details['charges_id'] = charges_id;
+            var charges_data = $('#charges_id option:selected').html();
+            other_charges_details['charges_name'] = charges_data;
+            other_charges_details['charges_amount'] = charges_amount;
+
+            var new_other_charges_details = JSON.parse(JSON.stringify(other_charges_details));
+            other_charges_details_index = $("#other_charges_details_index").val();
+            if (other_charges_details_index != '') {
+                other_charges_details_objectdata.splice(other_charges_details_index, 1, new_other_charges_details);
+            } else {
+                other_charges_details_objectdata.push(new_other_charges_details);
+            }
+            display_other_charges_details_html(other_charges_details_objectdata);
+            $("#other_charges_details_index").val('');
+            other_charges_details_index = '';
+            $('#other_charges_details_id').val('');
+            $("#charges_id").val(null).trigger("change");
+            $('#charges_weight').val('');
+            $('#charges_rate').val('');
+            $('#charges_amount').val('');
+            edit_other_charges_details_inc = 0;
+            $("#add_other_charges_details").removeAttr('disabled', 'disabled');
+        });
+
+        $(document).on('submit', '#save_sell', function (e) {
+            e.preventDefault();
+            if ($.trim($("#job_card_id").val()) == '') {
+                show_notify('Please select job no.', false);
+                $("#job_card_id").select2('open');
+                return false;
+            }
+
+            if ($.trim($("#gross").val()) == '') {
+                show_notify('Please Add Gross.', false);
+                $("#gross").focus();
+                return false;
+            }
+
+            if ($.trim($("#net").val()) == '') {
+                show_notify('Please Add Net.', false);
+                $("#net").focus();
+                return false;
+            }
+
+            $('#module_submit_btn').prop('disabled',true);
+            var post_data = new FormData(this);
+//            var other_charges_details_objectdata_stringify = JSON.stringify(other_charges_details_objectdata);
+//            post_data.append('other_charges_details', other_charges_details_objectdata_stringify);
+            $.ajax({
+                url: "<?= base_url('sell/save_sell') ?>",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                cache: false,
+                data: post_data,
+                success: function (response) {
+                    $('.changed-input').removeClass('changed-input');
+                    
+                    var json = $.parseJSON(response);
+                    if (json['error'] == 'Exist') {
+                        show_notify(json['error_exist'], false);
+                    } else if (json['success'] == 'Added' || json['success'] == 'Updated') {
+                        $.ajax({
+                            url: "<?= base_url('job_card/job_card_costing') ?>/" + json['job_card_id'] + "/after_sell/" + json['success'],
+                            type: "GET",
+                            processData: false,
+                            contentType: false,
+                            cache: false,
+                            success: function (response) {
+                                window.location.href = "<?php echo base_url('sell/sell_list') ?>";
+                                return false;
+                            }
+                        });
+                        return false;
+                    }
+                    $('.module_submit_btn').prop('disabled',false);
+                    $('#add_lineitem').prop('disabled',false);
+                    return false;
+                }
+            });
+            return false;
+        });
+
+    });
+
+    $('body').on('keydown', 'input,select,.select2-search__field, textarea', function(e) {
+        var self = $(this)
+          , form = self.parents('form:eq(0)')
+          , focusable
+          , next
+          , prev
+          ;
+
+        var id = $(this).attr('id');
+        if(id == 'add_lineitem'){
+            $('#add_lineitem').click();
+        } else if (e.shiftKey) {
+            if (e.keyCode == 13 && $(this).is("textarea") == false) {
+                focusable =   form.find('input,a,select,.select2-search__field,button,textarea').filter(':visible');
+                prev = focusable.eq(focusable.index(this)-1);
+
+                if (prev.length) {
+                   prev.focus();
+                } else {
+                    form.submit();
+                }
+            }
+        } else if (e.keyCode == 13 && $(this).is("textarea") == false) {
+            id_name = $(this).attr("id");
+            if(id_name == 'charges_weight'){
+                $('#charges_rate').focus();
+            }
+            if(id_name == 'charges_rate'){
+                $('#charges_amount').focus();
+            }
+            if(id_name == 'charges_amount'){
+                $('#add_other_charges_details').click();
+                $('#charges_id').select2('open');
+            }
+            if(id_name == 'other_charges'){
+                $('#sell_party_id').select2('open');
+            }
+            focusable = form.find('input,a,select,.select2-search__field,button,textarea').filter(':visible');
+            next = focusable.eq(focusable.index(this)+1);
+            if (next.length) {
+                next.focus();
+            } else {
+                form.submit();
+            }
+            return false;
+        }
+
+    });
+
+    /**
+        * WARNING: untested using Select2's option ['selectOnClose'=>true]
+        *
+        * This code was written because the Select2 widget does not handle
+        * tabbing from one form field to another.  The desired behavior is that
+        * the user can use [Enter] to select a value from Select2 and [Tab] to move
+        * to the next field on the form.
+        *
+        * The following code moves focus to the next form field when a Select2 'close'
+        * event is triggered.  If the next form field is a Select2 widget, the widget
+        * is opened automatically.
+        *
+        * Users that click elsewhere on the document will cause the active Select2
+        * widget to close.  To prevent the code from overriding the user's focus choice
+        * a flag is added to each element that the users clicks on.  If the flag is
+        * active, then the automatic focus script does not happen.
+        *
+        * To prevent conflicts with multiple Select2 widgets opening at once, a second
+        * flag is used to indicate the open status of a Select2 widget.  It was
+        * necessary to use a flag instead of reading the class '--open' because using the
+        * class '--open' as an indicator flag caused timing/bubbling issues.
+        *
+        * To simulate a Shift+Tab event, a flag is recorded every time the shift key
+        * is pressed.
+        */
+        var docBody = $(document.body);
+        var shiftPressed = false;
+        var clickedOutside = false;
+        //var keyPressed = 0;
+
+        docBody.on('keydown', function(e) {
+            var keyCaptured = (e.keyCode ? e.keyCode : e.which);
+            //shiftPressed = keyCaptured == 16 ? true : false;
+            if (keyCaptured == 16) { shiftPressed = true; }
+        });
+        docBody.on('keyup', function(e) {
+            var keyCaptured = (e.keyCode ? e.keyCode : e.which);
+            //shiftPressed = keyCaptured == 16 ? true : false;
+            if (keyCaptured == 16) { shiftPressed = false; }
+        });
+
+        docBody.on('mousedown', function(e){
+            // remove other focused references
+            clickedOutside = false;
+            // record focus
+            if ($(e.target).is('[class*="select2"]')!=true) {
+                clickedOutside = true;
+            }
+        });
+
+        docBody.on('select2:opening', function(e) {
+            // this element has focus, remove other flags
+            clickedOutside = false;
+            // flag this Select2 as open
+            $(e.target).attr('data-s2open', 1);
+        });
+        docBody.on('select2:closing', function(e) {
+            // remove flag as Select2 is now closed
+            $(e.target).removeAttr('data-s2open');
+        });
+
+        docBody.on('select2:close', function(e) {
+            current_select2_id = $(e.target).attr('id');
+            var elSelect = $(e.target);
+            elSelect.removeAttr('data-s2open');
+            var currentForm = elSelect.closest('form');
+            var othersOpen = currentForm.has('[data-s2open]').length;
+            if (othersOpen == 0 && clickedOutside==false) {
+                /* Find all inputs on the current form that would normally not be focus`able:
+                 *  - includes hidden <select> elements whose parents are visible (Select2)
+                 *  - EXCLUDES hidden <input>, hidden <button>, and hidden <textarea> elements
+                 *  - EXCLUDES disabled inputs
+                 *  - EXCLUDES read-only inputs
+                 */
+                var inputs = currentForm.find(':input:enabled:not([readonly], input:hidden, button:hidden, textarea:hidden)')
+                    .not(function () {   // do not include inputs with hidden parents
+                        return $(this).parent().is(':hidden');
+                    });
+                var elFocus = null;
+                var elFocus_old = null;
+                $.each(inputs, function (index) {
+                    var elInput = $(this);
+                    if (elInput.attr('id') == elSelect.attr('id')) {
+                        if ( shiftPressed) { // Shift+Tab
+                            elFocus = inputs.eq(index - 1);
+                            elFocus_old = inputs.eq(index);
+                        } else {
+                            elFocus = inputs.eq(index + 1);
+                            elFocus_old = inputs.eq(index);
+                        }
+                        return false;
+                    }
+                });
+                if (elFocus !== null) {
+                    // automatically move focus to the next field on the form
+                    var isSelect2 = elFocus.siblings('.select2').length > 0;
+                    if (isSelect2) {
+                        elFocus.select2('open');
+                    } else {
+                        if(elFocus_old.attr('id') == 'item_id'){
+                        } else {
+                            elFocus.focus();
+                        }
+                    }
+                }
+                if(current_select2_id == 'charges_id'){
+                    $('#charges_weight').focus();
+                }
+            }
+        });
+
+        /**
+         * Capture event where the user entered a Select2 control using the keyboard.
+         * http://stackoverflow.com/questions/20989458
+         * http://stackoverflow.com/questions/1318076
+         */
+        docBody.on('focus', '.select2', function(e) {
+            var elSelect = $(this).siblings('select');
+            var test1 = elSelect.is('[disabled]');
+            var test2 = elSelect.is('[data-s2open]');
+            var test3 = $(this).has('.select2-selection--single').length;
+            if (elSelect.is('[disabled]')==false && elSelect.is('[data-s2open]')==false
+                && $(this).has('.select2-selection--single').length>0) {
+                elSelect.attr('data-s2open', 1);
+                elSelect.select2('open');
+            }
+        });
+
+    function display_other_charges_details_html(other_charges_details_objectdata) {
+        $('#ajax-loader').show();
+        var other_charges_details_html = '';
+        var total_other_charges_details_weight = 0;
+        var total_other_charges_details_amount = 0;
+
+        $.each(other_charges_details_objectdata, function (index, value) {
+
+            var other_charges_details_edit_btn = '';
+            var other_charges_details_delete_btn = '';
+            var charges_weight = parseFloat(value.charges_weight) || 0;
+            var charges_rate = parseFloat(value.charges_rate) || 0;
+            var charges_amount = parseFloat(value.charges_amount) || 0;
+            other_charges_details_edit_btn = '<a class="btn btn-xs btn-primary btn-edit-item edit_charges_item edit_other_charges_details_' + index + '" href="javascript:void(0);" onclick="edit_other_charges_details(' + index + ')"><i class="fa fa-edit"></i></a> ';
+            other_charges_details_delete_btn = '<a class="btn btn-xs btn-danger btn-delete-item delete_charges_item" href="javascript:void(0);" onclick="remove_other_charges_details(' + index + ')"><i class="fa fa-trash"></i></a>';
+            var row_html = '<tr class="lineitem_index_' + index + '"><td class="">' +
+                    other_charges_details_edit_btn +
+                    other_charges_details_delete_btn +
+                    '</td>' +
+                    '<td>' + value.charges_name + '</td>' +
+                    '<td class="text-right">' + charges_weight.toFixed(3) + '</td>' +
+                    '<td class="text-right">' + charges_rate.toFixed(2) + '</td>' +
+                    '<td class="text-right">' + charges_amount.toFixed(2) + '</td>';
+            total_other_charges_details_weight = parseFloat(total_other_charges_details_weight) + parseFloat(charges_weight);
+            total_other_charges_details_amount = parseFloat(total_other_charges_details_amount) + parseFloat(charges_amount);
+            other_charges_details_html += row_html;
+        });
+        $('#other_charges_details_list').html(other_charges_details_html);
+        $('#total_other_charges_details_weight').html(total_other_charges_details_weight.toFixed(3));
+        $('#total_other_charges_details_amount').html(total_other_charges_details_amount.toFixed(2));
+        $('#ajax-loader').hide();
+    }
+    function edit_other_charges_details(index) {
+        $("html, body").animate({scrollTop: 0}, "slow");
+        $('#ajax-loader').show();
+        $(".delete_charges_item").addClass('hide');
+        other_charges_details_index = index;
+        if (edit_other_charges_details_inc == 0) {
+            edit_other_charges_details_inc = 1;
+            $(".add_other_charges_details").removeAttr("disabled");
+        }
+        var value = other_charges_details_objectdata[index];
+        $("#other_charges_details_index").val(index);
+        $("#other_charges_details_delete").val(value.other_charges_details_delete);
+        if(typeof(value.other_charges_details_id) !== "undefined" && value.other_charges_details_id !== null) {
+            $("#other_charges_details_id").val(value.other_charges_details_id);
+        }
+        $("#charges_id").val(null).trigger("change");
+        setSelect2Value($("#charges_id"), "<?= base_url('app/set_charges_select2_val_by_id/') ?>" + value.charges_id);
+        $("#charges_weight").val(value.charges_weight);
+        $("#charges_rate").val(value.charges_rate);
+        $("#charges_amount").val(value.charges_amount);
+        $('#ajax-loader').hide();
+    }
+    function remove_other_charges_details(index) {
+        value = other_charges_details_objectdata[index];
+        if (confirm('Are you sure ?')) {
+            other_charges_details_objectdata.splice(index, 1);
+            display_other_charges_details_html(other_charges_details_objectdata);
+        }
+    }
+
+    function set_jon_card_detail() {
+        var job_card_id = $("#job_card_id").val();
+        $("#party").val('');
+        $("#melting").val('');
+        $("#tag_id").val('');
+        $("#item_name").html('');
+        <?php if(isset($sell_row->sell_id)){ } else { ?>
+            $("#gross").val('');
+            $("#net").val('');
+            $("#touch").val('');
+            $("#other_charges").val('');
+        <?php } ?>
+        $("#image").html('');
+
+        if(job_card_id != '') {
+            $.ajax({
+                url: "<?= base_url('app/get_job_card_tag_detail/') ?>" + job_card_id,
+                type: "GET",
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: 'json',
+                success: function (response) {
+                    if(response.status == 'success') {
+                        $("#party").val(response.party_name);
+                        $("#melting").val(response.melting);
+                        $("#tag_id").val(response.tag_id);
+                        $("#item_name").html(response.item_name);
+                        <?php if(isset($sell_row->sell_id)){ } else { ?>
+                            $("#gross").val(response.tag_gross).trigger("change");
+                            $("#net").val(response.tag_net).trigger("change");
+                            $("#touch").val(response.melting).trigger("change");
+                            $("#other_charges").val(response.tag_other_charges);
+                        <?php } ?>
+                        if(response.tag_image != '' && response.tag_image != null){
+                            $("#image").html('<img src="<?php echo base_url(); ?>uploads/tag_item_photo/' + response.tag_image + '" alt="No Image Found" class="img-responsive" width="200px">');
+                        } else {
+                            $("#image").html('<br><small>Not Found in Tag</small>');
+                        }
+                    } 
+                }
+            });
+        }
+    }
+</script>
+<?php
+    $this->load->view('footer');
+?>
