@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-md-2 pr-0">
                                     <div class="form-group">
-                                        <label for="job_worker_id"> Person<span style="color:red"> *</span></label>
+                                        <label for="job_worker_id"> Person</label>
                                         <select class="form-control" name="line_items_data[job_worker_id]" id="job_worker_id" data-index="7"></select>
                                     </div>
                                 </div>
@@ -1612,11 +1612,11 @@
                 return false;
             }
 
-            if($.trim($('#job_worker_id').val()) == '') {
-                show_notify('Please select Person.', false);
-                $("#job_worker_id").select2('open');
-                return false;
-            }
+            // if($.trim($('#job_worker_id').val()) == '') {
+            //     show_notify('Please select Person.', false);
+            //     $("#job_worker_id").select2('open');
+            //     return false;
+            // }
 
             if($.trim($('#item_id').val()) == '') {
                 show_notify('Please select Item.', false);
