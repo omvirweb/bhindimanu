@@ -15,14 +15,14 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->load->model("Appmodel", "app_model");
         $this->load->model('Crud', 'crud');
-        $this->logged_in_id = isset($this->session->userdata('bansijew_is_logged_in')['user_id']);
+        $this->logged_in_id = isset($this->session->userdata('bhindimanu_is_logged_in')['user_id']);
         //$this->load->library(array('session', 'form_validation', 'email'));
         $this->load->library('email');
     }
 
     function index()
     {
-        if ($this->session->userdata('bansijew_is_logged_in')) {
+        if ($this->session->userdata('bhindimanu_is_logged_in')) {
             $data = array();
             $data['process_master_res'] = $this->crud->get_all_records('process_master','sequence','asc');
             $this->load->view('dashboard',$data);
@@ -38,7 +38,7 @@ class Auth extends CI_Controller
      */
     function login()
     {
-        if ($this->session->userdata('bansijew_is_logged_in')) {// logged in
+        if ($this->session->userdata('bhindimanu_is_logged_in')) {// logged in
             redirect('');
         } else {
             $this->form_validation->set_rules('user_name', 'username', 'trim|required');
@@ -55,7 +55,7 @@ class Auth extends CI_Controller
                 if ($response) {
                     $response[0]['user_name'] = $response[0]['user_name'];
                     $user_id = $response[0]['user_id'];
-                    $this->session->set_userdata('bansijew_is_logged_in', $response[0]);
+                    $this->session->set_userdata('bhindimanu_is_logged_in', $response[0]);
                     $sql = "
                                 SELECT
                                         ur.user_id,ur.website_module_id,ur.role_type_id, LOWER(r.title) as role, LOWER(m.title) as module
@@ -91,21 +91,21 @@ class Auth extends CI_Controller
 
     function logout()
     {
-        $this->session->unset_userdata('bansijew_is_logged_in');
+        $this->session->unset_userdata('bhindimanu_is_logged_in');
         session_destroy();
         redirect('auth/login/');
     }
 
     function profile()
     {
-        if (!$this->session->userdata('bansijew_is_logged_in')) {// logged in
+        if (!$this->session->userdata('bhindimanu_is_logged_in')) {// logged in
             redirect('');
         }
         //if($this->applib->have_access_role(CHANGE_PASSWORD_MODULE_ID,"allow")) {
             $data = array();
-            if (isset($this->session->userdata()['bansijew_is_logged_in']['user_id'])) {
+            if (isset($this->session->userdata()['bhindimanu_is_logged_in']['user_id'])) {
                 $table_name = "user";
-                $get_data = array('user_id', $this->session->userdata('bansijew_is_logged_in')['user_id']);
+                $get_data = array('user_id', $this->session->userdata('bhindimanu_is_logged_in')['user_id']);
             }
             $query['client_data'] = $this->crud->get_where($table_name, $get_data, 'row');
             set_page('change_password', $query);
@@ -130,7 +130,7 @@ class Auth extends CI_Controller
             if ($this->form_validation->run()) {
                 
                 $table_name = "user";
-                $update_id = array('user_id' => $this->session->userdata('bansijew_is_logged_in')['user_id']);
+                $update_id = array('user_id' => $this->session->userdata('bhindimanu_is_logged_in')['user_id']);
                 /**$this->session->set_flashdata('success', false);
                 $this->session->set_flashdata('message', 'Try Again!');**/
                 $this->crud->update($table_name, array('user_pass' => md5($_POST['new_pass'])), $update_id);
@@ -152,7 +152,7 @@ class Auth extends CI_Controller
     function check_old_password($old_pass)
     {
         $table_name = "user";
-        $check_data = array('user_id' => $this->session->userdata('bansijew_is_logged_in')['user_id'], 'user_pass' => md5($old_pass));
+        $check_data = array('user_id' => $this->session->userdata('bhindimanu_is_logged_in')['user_id'], 'user_pass' => md5($old_pass));
         if ($this->crud->check_is_exists($table_name, $check_data)) {
             return true;
         } else {
@@ -162,7 +162,7 @@ class Auth extends CI_Controller
     }
 
     function person_wise_process_gross($process_id){
-        if ($this->session->userdata('bansijew_is_logged_in')) {
+        if ($this->session->userdata('bhindimanu_is_logged_in')) {
             $data = array();
             if(!empty($process_id)) {
                 $data['process_name'] = $this->crud->get_column_value_by_id('process_master', 'process_name', array('id' => $process_id));

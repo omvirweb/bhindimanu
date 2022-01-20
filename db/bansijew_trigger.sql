@@ -1,6 +1,6 @@
 -- Shailesh : 2020_02_08 03:45 PM
 DROP TRIGGER IF EXISTS `manufacture_delete_after_trigger`; CREATE DEFINER=`root`@`localhost` TRIGGER `manufacture_delete_after_trigger` AFTER DELETE ON `manufacture` FOR EACH ROW INSERT INTO 
-  bansijew_log.`manufacture_log` 
+  bhindimanu_log.`manufacture_log` 
 SET 
   trigger_status = 'DELETE',
   `trigger_run_at`=NOW(),
@@ -34,7 +34,7 @@ SET
 
 
 DROP TRIGGER IF EXISTS `manufacture_insert_after_trigger`; CREATE DEFINER=`root`@`localhost` TRIGGER `manufacture_insert_after_trigger` AFTER INSERT ON `manufacture` FOR EACH ROW INSERT INTO 
-  bansijew_log.`manufacture_log` 
+  bhindimanu_log.`manufacture_log` 
 SET 
   trigger_status = 'INSERT',
   `trigger_run_at`=NOW(),
@@ -68,7 +68,7 @@ SET
 
 
 DROP TRIGGER IF EXISTS `manufacture_update_after_trigger`; CREATE DEFINER=`root`@`localhost` TRIGGER `manufacture_update_after_trigger` AFTER UPDATE ON `manufacture` FOR EACH ROW INSERT INTO 
-  bansijew_log.`manufacture_log` 
+  bhindimanu_log.`manufacture_log` 
 SET 
   trigger_status = 'UPDATE',
   `trigger_run_at`=NOW(),
@@ -101,7 +101,7 @@ SET
   `ir_deleted_at`=NEW.ir_deleted_at;
 
 DROP TRIGGER IF EXISTS `manufacture_issue_receive_delete_after_trigger`; CREATE DEFINER=`root`@`localhost` TRIGGER `manufacture_issue_receive_delete_after_trigger` AFTER DELETE ON `manufacture_issue_receive` FOR EACH ROW INSERT INTO 
-  bansijew_log.`manufacture_issue_receive_log` 
+  bhindimanu_log.`manufacture_issue_receive_log` 
 SET 
   trigger_status = 'DELETE',
   `trigger_run_at`=NOW(),
@@ -127,7 +127,7 @@ SET
 
 
 DROP TRIGGER IF EXISTS `manufacture_issue_receive_insert_after_trigger`; CREATE DEFINER=`root`@`localhost` TRIGGER `manufacture_issue_receive_insert_after_trigger` AFTER INSERT ON `manufacture_issue_receive` FOR EACH ROW INSERT INTO 
-  bansijew_log.`manufacture_issue_receive_log` 
+  bhindimanu_log.`manufacture_issue_receive_log` 
 SET 
   trigger_status = 'INSERT',
   `trigger_run_at`=NOW(),
@@ -153,7 +153,7 @@ SET
 
 
 DROP TRIGGER IF EXISTS `manufacture_issue_receive_update_after_trigger`; CREATE DEFINER=`root`@`localhost` TRIGGER `manufacture_issue_receive_update_after_trigger` AFTER UPDATE ON `manufacture_issue_receive` FOR EACH ROW INSERT INTO 
-  bansijew_log.`manufacture_issue_receive_log` 
+  bhindimanu_log.`manufacture_issue_receive_log` 
 SET 
   trigger_status = 'UPDATE',
   `trigger_run_at`=NOW(),

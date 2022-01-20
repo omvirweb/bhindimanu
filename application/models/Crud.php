@@ -13,7 +13,7 @@ class Crud extends CI_Model
 
     function is_login()
     {
-        if (!$this->session->userdata('bansijew_is_logged_in')) {
+        if (!$this->session->userdata('bhindimanu_is_logged_in')) {
             redirect('/auth/login/');
         }
     }

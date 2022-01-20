@@ -85,7 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-define('PACKAGE_NAME', 'Bansijew');
+define('PACKAGE_NAME', 'bhindimanu');
 
 //Issue Receive Type ID
 define('MANUFACTURE_TYPE_ISSUE_ID', 1);

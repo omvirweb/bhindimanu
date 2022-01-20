@@ -10,10 +10,10 @@ class Payment_receipt extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->model('Appmodel', 'app_model');
         $this->load->model('Crud', 'crud');
-        if (!$this->session->userdata('bansijew_is_logged_in')) {
+        if (!$this->session->userdata('bhindimanu_is_logged_in')) {
             redirect('/auth/login/');
         }
-        $this->logged_in_id = $this->session->userdata('bansijew_is_logged_in')['user_id'];
+        $this->logged_in_id = $this->session->userdata('bhindimanu_is_logged_in')['user_id'];
         $this->now_time = date('Y-m-d H:i:s');
     }
 	

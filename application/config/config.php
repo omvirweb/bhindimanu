@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/bansijew/';
-define('PACKAGE_FOLDER_NAME', 'bansijew');
+$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/bhindimanu/';
+define('PACKAGE_FOLDER_NAME', 'bhindimanu');
 
 /*
 |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?php
-if (isset($this->session->userdata()['bansijew_is_logged_in']) && !empty($this->session->userdata()['bansijew_is_logged_in'])) {
-    $logged_in_name = $this->session->userdata()['bansijew_is_logged_in']['user_name'];
+if (isset($this->session->userdata()['bhindimanu_is_logged_in']) && !empty($this->session->userdata()['bhindimanu_is_logged_in'])) {
+    $logged_in_name = $this->session->userdata()['bhindimanu_is_logged_in']['user_name'];
 }
 $segment1 = $this->uri->segment(1);
 $segment2 = $this->uri->segment(2);

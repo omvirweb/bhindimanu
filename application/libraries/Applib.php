@@ -15,7 +15,7 @@ class Applib
                 $this->ci->load->database();
                 $this->ci->load->model('Crud', 'crud');
                 $this->ci->load->library('session');
-                $this->logged_in_id = $this->ci->session->userdata('bansijew_is_logged_in')['user_id'];
+                $this->logged_in_id = $this->ci->session->userdata('bhindimanu_is_logged_in')['user_id'];
                 $this->now_date = date('Y-m-d');
                 $this->now_time = date('Y-m-d H:i:s');
 	}
